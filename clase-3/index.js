@@ -19,9 +19,12 @@ async function firstAttempt(){
     
 
     await page.waitForURL("https://rahulshettyacademy.com/angularpractice/shop");
-    const title = await page.getByText('Shop Name').allTextContents();
-    const buttons = await page.getByText('Add ').allTextContents();
-    console.log(buttons, title);
+    
+    for (const buttons of await page.getByText('Add ').all())
+        await buttons.click();
+    
+    const cart = await page.locator('.nav-link.btn.btn-primary').allTextContents();
+    console.assert(cart[0] === ' Checkout ( 4 )\n            (current)\n          ', 'incorrect');
 
     await page.pause();
     await browser.close();
